@@ -5,33 +5,33 @@ export class FetchData extends Component {
 
   constructor (props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+      this.state = { customers: [], loading: true };
 
-    fetch('api/SampleData/WeatherForecasts')
+      fetch('/customer/query')//'api/SampleData/WeatherForecasts'
       .then(response => response.json())
       .then(data => {
-        this.setState({ forecasts: data, loading: false });
+        this.setState({ customers: data, loading: false });
       });
   }
 
-  static renderForecastsTable (forecasts) {
+    static renderCustomersTable(customers) {
     return (
       <table className='table table-striped'>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.dateFormatted}>
-              <td>{forecast.dateFormatted}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
+          {customers.map(customer =>
+            <tr>
+              <td>{customer.name}</td>
+              <td>{customer.address}</td>
+              <td></td>
+              <td></td>
             </tr>
           )}
         </tbody>
@@ -42,7 +42,7 @@ export class FetchData extends Component {
   render () {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+        : FetchData.renderCustomersTable(this.state.customers);
 
     return (
       <div>

@@ -3,23 +3,27 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Onboarding_Task.Dao;
+using Onboarding_Task.AppDbContext;
 
 namespace Onboarding_Task
 {
     public class Startup
     {
+
+        private readonly IConfiguration _configuration = null;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
@@ -27,6 +31,10 @@ namespace Onboarding_Task
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            services.AddDbContextPool<MyDbContext>(
+                options => options.UseSqlServer(_configuration.GetConnectionString("AppDBConnection"))
+                );
+            services.AddScoped<ICustomerDao, CustomerDao>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
