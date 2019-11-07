@@ -2,13 +2,13 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
     "libraries": [
-        {
-            "library": "semantic-ui-react@0.88.1",
-            "destination": "ClientApp/scss/semantic-ui-react"
-        },
-        {
-            "library": "semantic-ui@2.4.1",
-            "destination": "ClientApp/scss/semantic-ui-react"
-        }
+        //{
+        //    "library": "semantic-ui-react@0.81.0",
+        //    "destination": "/ClientApp/src/semantic-ui-react"
+        //},
+        //{
+        //    "library": "semantic-ui@2.4.1",
+        //    "destination": "/ClientApp/src/semantic-ui-react"
+        //}
     ]
 }

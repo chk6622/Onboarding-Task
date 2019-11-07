@@ -14,7 +14,7 @@ namespace Onboarding_Task.AppDbContext
 
         }
         public DbSet<Customer> Customers { set; get; }
-        public DbSet<Product> products { set; get; }
+        public DbSet<Product> Products { set; get; }
         public DbSet<Store> Stores { set; get; }
         public DbSet<Sales> Sales { set; get; }
 

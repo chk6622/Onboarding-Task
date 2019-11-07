@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table } from 'semantic-ui-react'
+import { Icon, Label, Menu, Table ,Button} from "semantic-ui-react";
+import 'semantic-ui-css/semantic.min.css';
 
 export class CustomerList extends Component {
   static displayName = CustomerList.name;
@@ -19,6 +20,14 @@ export class CustomerList extends Component {
     return (
         <Table celled>
             <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell colSpan='4'>
+                        <Button floated='left' icon labelPosition='left' primary size='small'>
+                            <Icon name='user' /> 
+                            Add Customer
+                        </Button>
+                    </Table.HeaderCell> 
+                </Table.Row>
                 <Table.Row>
                     <Table.HeaderCell>Name</Table.HeaderCell>
                     <Table.HeaderCell>Address</Table.HeaderCell>
@@ -40,19 +49,21 @@ export class CustomerList extends Component {
 
             <Table.Footer>
                 <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
-                        <Menu floated='right' pagination>
-                            <Menu.Item as='a' icon>
-                                <Icon name='chevron left' />
-                            </Menu.Item>
-                            <Menu.Item as='a'>1</Menu.Item>
-                            <Menu.Item as='a'>2</Menu.Item>
-                            <Menu.Item as='a'>3</Menu.Item>
-                            <Menu.Item as='a'>4</Menu.Item>
-                            <Menu.Item as='a' icon>
-                                <Icon name='chevron right' />
-                            </Menu.Item>
-                        </Menu>
+                    <Table.HeaderCell colSpan='4'>
+                        
+                            <Menu floated='right' pagination>
+                                <Menu.Item as='a' icon>
+                                    <Icon name='chevron left' />
+                                </Menu.Item>
+                                <Menu.Item as='a'>1</Menu.Item>
+                                <Menu.Item as='a'>2</Menu.Item>
+                                <Menu.Item as='a'>3</Menu.Item>
+                                <Menu.Item as='a'>4</Menu.Item>
+                                <Menu.Item as='a' icon>
+                                    <Icon name='chevron right' />
+                                </Menu.Item>
+                            </Menu>
+
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
