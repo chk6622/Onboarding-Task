@@ -35,6 +35,9 @@ namespace Onboarding_Task
                 options => options.UseSqlServer(_configuration.GetConnectionString("AppDBConnection"))
                 );
             services.AddScoped<ICustomerDao, CustomerDao>();
+            services.AddScoped<IProductDao, ProductDao>();
+            services.AddScoped<IStoreDao, StoreDao>();
+            services.AddScoped<ISalesDao, SalesDao>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
