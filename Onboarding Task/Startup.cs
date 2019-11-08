@@ -74,6 +74,8 @@ namespace Onboarding_Task
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            
         }
     }
 }

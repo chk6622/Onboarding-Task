@@ -25,11 +25,11 @@ namespace Onboarding_Task.Controllers
         public JsonResult Query(ProductView productView) 
         {
             IEnumerable products = this._productDao.QueryAll();
-            //var customer = null;
+            //var product = null;
             //object model=null;
-            //foreach (var customer in customers)
+            //foreach (var product in products)
             //{
-            //    model = customer;
+            //    model = product;
             //}
             return Json(products);
         }
@@ -38,6 +38,46 @@ namespace Onboarding_Task.Controllers
         {
             Product product = this._productDao.GetObjectById(id);
             return Json(product);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Update([FromBody] ProductView productView)
+        {
+            bool isSuccess = false;
+            string rMessage = "Update product success!";
+            Product product = productView;
+            isSuccess = this._productDao.Update(product);
+            if (!isSuccess)
+            {
+                rMessage = "Update product fail!";
+            }
+            return Json(rMessage);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Add([FromBody] ProductView productView)
+        {
+            bool isSuccess = false;
+            string rMessage = "Add product success!";
+            Product product = productView;
+            isSuccess = this._productDao.Add(product);
+            if (!isSuccess)
+            {
+                rMessage = "Add product fail!";
+            }
+            return Json(rMessage);
+        }
+
+        public JsonResult Delete(int id)
+        {
+            bool isSuccess = false;
+            string rMessage = "Delete product success!";
+            isSuccess = this._productDao.Delete(id);
+            if (!isSuccess)
+            {
+                rMessage = "Delete product fail!";
+            }
+            return Json(rMessage);
         }
     }
 }

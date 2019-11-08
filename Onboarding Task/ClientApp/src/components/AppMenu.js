@@ -1,38 +1,42 @@
 import React, { Component } from 'react'
 import { Input, Menu, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
+import { Link, withRouter } from 'react-router-dom';
 
 
 export class AppMenu extends Component {
     state = { activeItem: 'home' }
 
     handleItemClick = (e, { name }) => {
-        if (name === 'Customer')
+        /*if (name === 'Customer')
         {
             e.href
         }
+        if (name === 'Product') {
+            e.href
+        }*/
         this.setState({ activeItem: name });
     }
 
     render() {
         const { activeItem } = this.state
-
+        //debugger;
         return (
             <div>
                 <Menu pointing>
-                    <Menu.Item as='a' href="customer"
+                    <Menu.Item as={Link} to="customer"
                         name='Customer'
                         active={activeItem === 'Customer'}
                         onClick={this.handleItemClick}
                     />
-                    <Menu.Item
-                        name='messages'
-                        active={activeItem === 'messages'}
+                    <Menu.Item as={Link} to="product"
+                        name='Product'
+                        active={activeItem === 'Product'}
                         onClick={this.handleItemClick}
                     />
-                    <Menu.Item
-                        name='friends'
-                        active={activeItem === 'friends'}
+                    <Menu.Item as={Link} to="store"
+                        name='Store'
+                        active={activeItem === 'Store'}
                         onClick={this.handleItemClick}
                     />
                     <Menu.Menu position='right'>
