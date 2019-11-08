@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Onboarding_Task.AppDbContext;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
@@ -49,7 +52,7 @@ namespace Onboarding_Task.Dao
         public Sales GetObjectById(int id)
         {
             Sales sales = null;
-            sales = _context.Sales.Find(id);
+            sales = _context.Sales.Include(x => x.Customer).Include(x=>x.Product).Include(x=>x.Store).First(x => x.Customer.Id == id);
             return sales;
         }
 

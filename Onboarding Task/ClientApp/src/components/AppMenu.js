@@ -39,9 +39,18 @@ export class AppMenu extends Component {
                         active={activeItem === 'Store'}
                         onClick={this.handleItemClick}
                     />
+                    <Menu.Item as={Link} to="sales"
+                        name='Sales'
+                        active={activeItem === 'Sales'}
+                        onClick={this.handleItemClick}
+                    />
                     <Menu.Menu position='right'>
                         <Menu.Item>
-                            Onboarding_Task
+                            <Menu.Item as={Link} to="home"
+                                name='Onboarding_Task'
+                                active={activeItem === 'Home'}
+                                onClick={this.handleItemClick}
+                            />
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>

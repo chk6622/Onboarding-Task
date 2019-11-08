@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
