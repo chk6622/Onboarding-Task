@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -11,7 +11,6 @@ class UpdateSalesForm extends React.Component {
         this.state = {
             id:'',
             dateSold: '',
-
             dateSold_error: '',
         };
 
@@ -24,7 +23,9 @@ class UpdateSalesForm extends React.Component {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                this.setState({ id: data.id, dateSold: data.dateSold, loading: false });
+                if (data != null) {
+                    this.setState({ id: data.id, dateSold: data.dateSold, loading: false });
+                }
             });
     }
     myValidate = (name) => {
@@ -38,7 +39,7 @@ class UpdateSalesForm extends React.Component {
 
         return isValid;
     }
-    }
+    
     mySubmitHandler = (event) => {
         event.preventDefault();
         let dateSold = this.state.dateSold;
@@ -62,13 +63,13 @@ class UpdateSalesForm extends React.Component {
         let val = event.target.value;
         this.setState({ [nam]: val });
     }
-    render() {
+    render(){
         return (
             <Form onSubmit={this.mySubmitHandler}>
                 <Form.Input type='hidden' name='id' value={this.state.id} />
                 <Form.Field>
                     <label>Date Sold</label>
-                    <Form.Input type='text' name='dateSold' onChange={this.myChangeHandler} placeholder='Please input sold date.' />
+                    <Form.Input type='text' name='dateSold' value={this.state.dateSold} onChange={this.myChangeHandler} placeholder='Please input sold date.' />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>
             </Form>

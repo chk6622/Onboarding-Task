@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -25,7 +25,9 @@ class UpdateProductForm extends React.Component {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                this.setState({ id: data.id, name: data.name, price: data.price, loading: false });
+                if (data != null) {
+                    this.setState({ id: data.id, name: data.name, price: data.price, loading: false });
+                }
             });
     }
     myValidate = (name,price) => {      

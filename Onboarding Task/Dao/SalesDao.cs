@@ -52,7 +52,15 @@ namespace Onboarding_Task.Dao
         public Sales GetObjectById(int id)
         {
             Sales sales = null;
-            sales = _context.Sales.Include(x => x.Customer).Include(x=>x.Product).Include(x=>x.Store).First(x => x.Customer.Id == id);
+            try
+            {
+                sales = _context.Sales.Include(x => x.Customer).Include(x=>x.Product).Include(x=>x.Store).FirstOrDefault(x => x.Id == id);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            
             return sales;
         }
 

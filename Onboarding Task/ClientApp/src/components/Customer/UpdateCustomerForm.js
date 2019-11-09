@@ -25,7 +25,10 @@ class UpdateCustomerForm extends React.Component {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                this.setState({ id: data.id, name: data.name, address: data.address, loading: false });
+                if (data != null) {
+                    this.setState({ id: data.id, name: data.name, address: data.address, loading: false });
+                }
+                
             });
     }
     myValidate = (name,address) => {      
