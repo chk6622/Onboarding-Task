@@ -71,7 +71,7 @@ namespace Onboarding_Task.Dao
 
         public IEnumerable<Sales> QueryAll()
         {
-            return this._context.Sales;
+            return this._context.Sales.Include(x => x.Customer).Include(x=>x.Product).Include(x=>x.Store);
         }
 
         public bool Update(Sales sales)

@@ -12,7 +12,7 @@ class AddStoreModal extends React.Component {
     render() {
         return (
             <Modal size='tiny' onClose={() => this.props.parents.refreshList()} trigger={< Button floated='left' icon labelPosition='left' primary size='small'>
-                <Icon name='user' />
+                <Icon name='building outline' />
                 Add Store
              </Button>}>
                 <Modal.Header>Add Store</Modal.Header>

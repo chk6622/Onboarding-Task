@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Checkbox, Form } from 'semantic-ui-react';
+import DropdownSearchQuery from '../DropdownSearchQuery';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -24,7 +25,8 @@ class UpdateSalesForm extends React.Component {
             .then(response => response.json())
             .then(data => {
                 if (data != null) {
-                    this.setState({ id: data.id, dateSold: data.dateSold, loading: false });
+                    //debugger
+                    this.setState({ 'id': data.id, 'dateSold': data.dateSold, 'customerId': data.customerId, 'productId': data.productId, 'storeId': data.storeId, 'loading': false });
                 }
             });
     }
@@ -44,11 +46,15 @@ class UpdateSalesForm extends React.Component {
         event.preventDefault();
         let dateSold = this.state.dateSold;
         let id = this.state.id;
+        let customerId = this.state.customerId;
+        let productId = this.state.productId;
+        let storeId = this.state.storeId;
+        alert(productId + '-' + storeId);
         if (this.myValidate(dateSold)) {
             fetch('/sales/update', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "id": id, "dateSold": dateSold })
+                body: JSON.stringify({ "id": id, "dateSold": dateSold, 'customerId': customerId, "productId": productId, "storeId": storeId })
             })
                 .then(function (response) {
                     return response.json();
@@ -70,6 +76,39 @@ class UpdateSalesForm extends React.Component {
                 <Form.Field>
                     <label>Date Sold</label>
                     <Form.Input type='text' name='dateSold' value={this.state.dateSold} onChange={this.myChangeHandler} placeholder='Please input sold date.' />
+                </Form.Field>
+                <Form.Field>
+                    <label>Customer</label>
+                    <DropdownSearchQuery
+                        parent={this}
+                        initValue={this.state.customerId}
+                        fetchDataUrl='/customer/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='customerId'
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <label>Product</label>
+                    <DropdownSearchQuery
+                        parent={this}
+                        initValue={this.state.productId}
+                        fetchDataUrl='/product/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='productId'
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <label>Store</label>
+                    <DropdownSearchQuery
+                        parent={this}
+                        initValue={this.state.storeId}
+                        fetchDataUrl='/store/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='storeId'
+                    />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>
             </Form>

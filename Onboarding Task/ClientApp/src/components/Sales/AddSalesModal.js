@@ -12,7 +12,7 @@ class AddSalesModal extends React.Component {
     render() {
         return (
             <Modal size='tiny' onClose={() => this.props.parents.refreshList()} trigger={< Button floated='left' icon labelPosition='left' primary size='small'>
-                <Icon name='user' />
+                <Icon name='dollar sign' />
                 Add Sales
              </Button>}>
                 <Modal.Header>Add Sales</Modal.Header>

@@ -79,7 +79,7 @@ class UpdateProductForm extends React.Component {
                     <Form.Input type='text' name='name' value={this.state.name} onChange={this.myChangeHandler} placeholder='Please input your name.' />
                 </Form.Field>
                 <Form.Field>
-                    <label>Address</label>
+                    <label>Price</label>
                     <Form.Input type='text' name='price' value={this.state.price} onChange={this.myChangeHandler} placeholder='Please input your price.' />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>

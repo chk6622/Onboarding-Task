@@ -11,6 +11,7 @@ class AddProductModal extends React.Component {
 
     render() {
         return (
+            <div align='center'>
             <Modal size='tiny' onClose={() => this.props.parents.refreshList()} trigger={< Button floated='left' icon labelPosition='left' primary size='small'>
                 <Icon name='archive' />
                 Add Product
@@ -21,7 +22,8 @@ class AddProductModal extends React.Component {
                     <AddProductForm />
 
                 </Modal.Content>
-            </Modal>
+                </Modal>
+            </div>
         );
     }
 }

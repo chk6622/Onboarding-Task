@@ -31,7 +31,7 @@ class AddCustomerForm extends React.Component {
         return isValid;
     }
     mySubmitHandler = (event) => {
-        debugger
+        //debugger
         event.preventDefault();
         let name = this.state.name;
         let address = this.state.address;

@@ -16,7 +16,7 @@ export class SalesList extends Component {
       this.state = { saless: [], loading: true,refresh:true};
       this.queryData = this.queryData.bind(this);
       this.deleteData = this.deleteData.bind(this);
-      this.renderSalessTable = this.renderSalessTable.bind(this);
+      this.renderSalesTable = this.renderSalesTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
 
       this.refreshList();
@@ -52,20 +52,22 @@ export class SalesList extends Component {
         //console.log('refresh stop!');
     }
 
-    renderSalessTable() {
+    renderSalesTable() {
         
         
     return (
         <Table celled>
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
+                    <Table.HeaderCell colSpan='6'>
                         <AddSalesModal parents={this}/>
                     </Table.HeaderCell> 
                 </Table.Row>
                 <Table.Row>
                     <Table.HeaderCell>DateSold</Table.HeaderCell>
-            
+                    <Table.HeaderCell>Customer</Table.HeaderCell>
+                    <Table.HeaderCell>Product</Table.HeaderCell>
+                    <Table.HeaderCell>Store</Table.HeaderCell>
                     <Table.HeaderCell>Option</Table.HeaderCell>
                     <Table.HeaderCell>Option</Table.HeaderCell>
                 </Table.Row>
@@ -75,7 +77,9 @@ export class SalesList extends Component {
                 {this.state.saless.map(sales =>
                     <Table.Row key={sales.id}>
                         <Table.Cell>{sales.dateSold}</Table.Cell>
-                        
+                        <Table.Cell>{sales.customer == null ? '' : sales.customer.name}</Table.Cell>
+                        <Table.Cell>{sales.product == null ? '' : sales.product.name}</Table.Cell>
+                        <Table.Cell>{sales.store == null ? '' : sales.store.name}</Table.Cell>
                         <Table.Cell><UpdateSalesModal salesId={sales.id} parents={this}/></Table.Cell>
                         <Table.Cell><Button value={sales.id} onClick={()=>this.deleteData(sales.id)}>Delete</Button></Table.Cell>
                     </Table.Row>
@@ -84,7 +88,7 @@ export class SalesList extends Component {
 
             <Table.Footer>
                 <Table.Row>
-                    <Table.HeaderCell colSpan='3'>
+                    <Table.HeaderCell colSpan='6'>
                         
                             <Menu floated='right' pagination>
                                 <Menu.Item as='a' icon>
@@ -107,11 +111,11 @@ export class SalesList extends Component {
   }
 
     render() {
-    let contents = this.state.loading? <p><em>Loading...</em></p>: this.renderSalessTable();
+    let contents = this.state.loading? <p><em>Loading...</em></p>: this.renderSalesTable();
 
     return (
       <div>
-            <h1>Saless</h1>
+            <h1>Sales</h1>
            
                 
          
