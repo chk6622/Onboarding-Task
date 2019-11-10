@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Onboarding_Task.Dao;
 using Onboarding_Task.AppDbContext;
+using System.Linq;
 
 namespace Onboarding_Task
 {
@@ -25,21 +26,24 @@ namespace Onboarding_Task
         {
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(
-            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-        );
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore );
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
             services.AddDbContextPool<MyDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("AppDBConnection"))
                 );
+
             services.AddScoped<ICustomerDao, CustomerDao>();
             services.AddScoped<IProductDao, ProductDao>();
             services.AddScoped<IStoreDao, StoreDao>();
             services.AddScoped<ISalesDao, SalesDao>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +81,24 @@ namespace Onboarding_Task
                 }
             });
 
-            
+            UpdateDatabase(app);
+        }
+
+        private void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<MyDbContext>())
+                {
+
+                    if (context.Database.GetPendingMigrations().Any())
+                    {
+                        //context.Database.Migrate(); //Ö´ÐÐÇ¨ÒÆ
+                    }
+                }
+            }
         }
     }
 }
