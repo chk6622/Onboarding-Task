@@ -13,6 +13,8 @@ namespace Onboarding_Task.Models
         public Customer Customer { set; get; }
         public Product Product { set; get; }
         public Store Store { set; get; }
+        [Required]
+        [StringLength(10)]
         public string DateSold { set; get; }
     }
 }
