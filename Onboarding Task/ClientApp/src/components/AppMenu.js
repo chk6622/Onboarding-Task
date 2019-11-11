@@ -31,7 +31,7 @@ export class AppMenu extends Component {
         //debugger;
         return (
             <Menu vertical>
-                <Menu.Item as={Link} to="home"
+                <Menu.Item as={Link} to="/"
                     icon='home'
                     name='Home'
                     active={activeItem === 'Home'}
