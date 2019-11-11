@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
 import AddSalesModal from './AddSalesModal';
 import UpdateSalesModal from './UpdateSalesModal';
+import DeleteButton from '../DeleteButton.js';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -15,7 +16,7 @@ export class SalesList extends Component {
       super(props);
       this.state = { saless: [], loading: true,refresh:true};
       this.queryData = this.queryData.bind(this);
-      this.deleteData = this.deleteData.bind(this);
+      //this.deleteData = this.deleteData.bind(this);
       this.renderSalesTable = this.renderSalesTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
 
@@ -31,7 +32,7 @@ export class SalesList extends Component {
             });
     }
 
-    deleteData(id) {
+    /*deleteData(id) {
         fetch('/sales/delete/' + id)
             .then(function (response) {
                 return response.json();
@@ -44,7 +45,7 @@ export class SalesList extends Component {
                 
         //this.queryData("/sales/query/")
             );
-    }
+    }*/
 
     refreshList() {
         //console.log('refresh start!');
@@ -80,8 +81,8 @@ export class SalesList extends Component {
                         <Table.Cell>{sales.customer == null ? '' : sales.customer.name}</Table.Cell>
                         <Table.Cell>{sales.product == null ? '' : sales.product.name}</Table.Cell>
                         <Table.Cell>{sales.store == null ? '' : sales.store.name}</Table.Cell>
-                        <Table.Cell><UpdateSalesModal salesId={sales.id} parents={this}/></Table.Cell>
-                        <Table.Cell><Button value={sales.id} onClick={()=>this.deleteData(sales.id)}>Delete</Button></Table.Cell>
+                        <Table.Cell><UpdateSalesModal salesId={sales.id} parents={this} /></Table.Cell>
+                        <Table.Cell><DeleteButton DeleteUrl={'/sales/delete/' + sales.id} Callback={this.refreshList}/></Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>

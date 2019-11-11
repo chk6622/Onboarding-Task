@@ -3,7 +3,7 @@ import { Button, Header, Image, Modal, Icon, Container } from 'semantic-ui-react
 import UpdateCustomerForm from './UpdateCustomerForm';
 import 'semantic-ui-css/semantic.min.css';
 
-
+const modalStyle = { position: 'relative', height: '310px' }
 
 class UpdateCustomerModal extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class UpdateCustomerModal extends React.Component {
     
     render() {
         return (
-            <Modal size='tiny' onClose={() => this.props.parents.refreshList()} trigger={< Button>Update</Button>}>
+            <Modal size='mini' style={modalStyle} onClose={() => this.props.parents.refreshList()} trigger={< Button color='green'>Update</Button>}>
                 <Modal.Header>Update Customer</Modal.Header>
                 <Modal.Content>
 

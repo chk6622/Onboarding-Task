@@ -1,7 +1,86 @@
-﻿body {
-
+﻿* {
+    padding:0;
+    margin:0;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 3px;
+    height: 98vh;
+    border: solid green;
+    font-family:Arial, Helvetica, sans-serif;
+    //background: #ccc;
 }
 
-.pageContent {
-    margin: 20px;
+    main > * {
+        //display: flex;
+        //flex-grow: 1;
+
+    }
+
+    main banner {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        background-image:url('../img/banner.jpg');
+        background-repeat:repeat-x;
+
+        padding-left:20px;
+        font-size:50px;
+        font-weight:bold;
+        text-transform:uppercase;
+        color:#D1D1D1;
+        text-shadow:1px 1px white, -1px -1px #333;
+    }
+
+    main div.workarea{
+        padding-top:5px;
+        margin-left:5px;
+        display:flex;
+        flex-direction:row;
+        //flex-grow:1;
+        height:600px;
+    }
+
+        main div.workarea nav {
+            display: block;
+            width: 250px;
+            padding:10px;
+            border-right:solid 1px #D1D1D1;
+            //background:blue;
+            //align-items: center;
+            //justify-content: center;
+        }
+
+        main div.workarea article {
+            display: flex;
+            flex-grow: 1;
+            align-items: flex-start;
+            justify-content: center;
+            //margin-left:auto;
+            //width: 70%;
+            //background: green;
+            //height: 80%;
+            //border-top: solid 1px black;
+        }
+    main footer {
+        display: flex;
+        height:50px;
+        justify-content: center;
+        align-items: center;
+        font: black;
+        //background: black;
+        border-top: solid 1px #D1D1D1;
+    }
+
+.ui .modal {
+    position: relative;
+}
+
+th {
+    text-transform: uppercase;
+    font-weight:bold;
 }

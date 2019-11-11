@@ -73,7 +73,6 @@ class UpdateCustomerForm extends React.Component {
     render() {
         return (
             <Form onSubmit={this.mySubmitHandler}>
-                <Form.Input type='hidden' name='id' value={this.state.id} />
                 <Form.Field>
                     <label>Name</label>
                     <Form.Input type='text' name='name' value={this.state.name} onChange={this.myChangeHandler} placeholder='Please input your name.' />
@@ -83,6 +82,7 @@ class UpdateCustomerForm extends React.Component {
                     <Form.Input type='text' name='address' value={this.state.address} onChange={this.myChangeHandler} placeholder='Please input your address.' />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>
+                <Form.Input type='hidden' name='id' value={this.state.id} />
             </Form>
         );
     }

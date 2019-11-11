@@ -72,7 +72,7 @@ class UpdateSalesForm extends React.Component {
     render(){
         return (
             <Form onSubmit={this.mySubmitHandler}>
-                <Form.Input type='hidden' name='id' value={this.state.id} />
+                
                 <Form.Field>
                     <label>Date Sold</label>
                     <Form.Input type='text' name='dateSold' value={this.state.dateSold} onChange={this.myChangeHandler} placeholder='Please input sold date.' />
@@ -111,6 +111,7 @@ class UpdateSalesForm extends React.Component {
                     />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>
+                <Form.Input type='hidden' name='id' value={this.state.id} />
             </Form>
         );
     }

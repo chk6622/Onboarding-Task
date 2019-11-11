@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
 import AddCustomerModal from './AddCustomerModal';
 import UpdateCustomerModal from './UpdateCustomerModal';
+import DeleteButton from '../DeleteButton.js';
 import 'semantic-ui-css/semantic.min.css';
-
+import '../../css/AppSheet.css';
 
 
 
@@ -15,7 +16,7 @@ export class CustomerList extends Component {
       super(props);
       this.state = { customers: [], loading: true,refresh:true};
       this.queryData = this.queryData.bind(this);
-      this.deleteData = this.deleteData.bind(this);
+      //this.deleteData = this.deleteData.bind(this);
       this.renderCustomersTable = this.renderCustomersTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
 
@@ -31,7 +32,7 @@ export class CustomerList extends Component {
             });
     }
 
-    deleteData(id) {
+    /*deleteData(id) {
         fetch('/customer/delete/' + id)
             .then(function (response) {
                 return response.json();
@@ -44,7 +45,7 @@ export class CustomerList extends Component {
                 
         //this.queryData("/customer/query/")
             );
-    }
+    }*/
 
     refreshList() {
         //console.log('refresh start!');
@@ -77,7 +78,7 @@ export class CustomerList extends Component {
                         <Table.Cell>{customer.name}</Table.Cell>
                         <Table.Cell>{customer.address}</Table.Cell>
                         <Table.Cell><UpdateCustomerModal customerId={customer.id} parents={this}/></Table.Cell>
-                        <Table.Cell><Button value={customer.id} onClick={()=>this.deleteData(customer.id)}>Delete</Button></Table.Cell>
+                        <Table.Cell><DeleteButton DeleteUrl={'/customer/delete/' + customer.id} Callback={this.refreshList} /></Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>

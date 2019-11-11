@@ -1,20 +1,28 @@
 import React, { Component } from 'react'
-import { Input, Menu, Segment } from 'semantic-ui-react'
+import { Segment, Menu, Grid } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import { Link, withRouter } from 'react-router-dom';
 
+const menuHeader = {
+    height: '35px',
+    font: '20px bold',
+    border: 'solid black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}
+const menuItem = {
+    height: '30px',
+    font: '15px bold',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}
 
 export class AppMenu extends Component {
-    state = { activeItem: 'home' }
+    state = { activeItem:'Home' }
 
     handleItemClick = (e, { name }) => {
-        /*if (name === 'Customer')
-        {
-            e.href
-        }
-        if (name === 'Product') {
-            e.href
-        }*/
         this.setState({ activeItem: name });
     }
 
@@ -22,39 +30,43 @@ export class AppMenu extends Component {
         const { activeItem } = this.state
         //debugger;
         return (
-            <div>
-                <Menu pointing>
-                    <Menu.Item as={Link} to="customer"
-                        name='Customer'
-                        active={activeItem === 'Customer'}
-                        onClick={this.handleItemClick}
+            <Menu vertical>
+                <Menu.Item as={Link} to="home"
+                    icon='home'
+                    name='Home'
+                    active={activeItem === 'Home'}
+                    onClick={this.handleItemClick}
+                />
+
+                <Menu.Item as={Link} to="customer"
+                    icon='user' 
+                name='Customer'
+                active={activeItem === 'Customer'}
+                onClick={this.handleItemClick}
+                />
+
+                <Menu.Item as={Link} to="product"
+                    icon='archive'
+                    name='Product'
+                    active={activeItem === 'Product'}
+                    onClick={this.handleItemClick}
                     />
-                    <Menu.Item as={Link} to="product"
-                        name='Product'
-                        active={activeItem === 'Product'}
-                        onClick={this.handleItemClick}
+
+                <Menu.Item as={Link} to="store"
+                    icon ='building outline'
+                    name='Store'
+                    active={activeItem === 'Store'}
+                    onClick={this.handleItemClick}
                     />
-                    <Menu.Item as={Link} to="store"
-                        name='Store'
-                        active={activeItem === 'Store'}
-                        onClick={this.handleItemClick}
+                    
+                <Menu.Item as={Link} to="sales"
+                    icon='dollar sign' 
+                    name='Sales'
+                    active={activeItem === 'Sales'}
+                    onClick={this.handleItemClick}
                     />
-                    <Menu.Item as={Link} to="sales"
-                        name='Sales'
-                        active={activeItem === 'Sales'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Menu position='right'>
-                        <Menu.Item>
-                            <Menu.Item as={Link} to="home"
-                                name='Onboarding_Task'
-                                active={activeItem === 'Home'}
-                                onClick={this.handleItemClick}
-                            />
-                        </Menu.Item>
-                    </Menu.Menu>
-                </Menu>
-            </div>
+
+            </Menu >
         )
     }
 }

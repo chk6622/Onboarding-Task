@@ -3,6 +3,7 @@ import { Button, Header, Image, Modal, Icon, Container } from 'semantic-ui-react
 import AddProductForm from './AddProductForm';
 import 'semantic-ui-css/semantic.min.css';
 
+const modalStyle = { position: 'relative', height: '310px' }
 class AddProductModal extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,7 @@ class AddProductModal extends React.Component {
     render() {
         return (
             <div align='center'>
-            <Modal size='tiny' onClose={() => this.props.parents.refreshList()} trigger={< Button floated='left' icon labelPosition='left' primary size='small'>
+                <Modal size='mini' style={modalStyle} onClose={() => this.props.parents.refreshList()} trigger={< Button floated='left' icon labelPosition='left' primary size='small'>
                 <Icon name='archive' />
                 Add Product
              </Button>}>

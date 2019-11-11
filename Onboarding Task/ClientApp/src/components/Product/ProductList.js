@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
 import AddProductModal from './AddProductModal';
 import UpdateProductModal from './UpdateProductModal';
+import DeleteButton from '../DeleteButton.js';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -15,7 +16,7 @@ export class ProductList extends Component {
         super(props);
         this.state = { products: [], loading: true, refresh: true };
         this.queryData = this.queryData.bind(this);
-        this.deleteData = this.deleteData.bind(this);
+        //this.deleteData = this.deleteData.bind(this);
         this.renderProductsTable = this.renderProductsTable.bind(this);
         this.refreshList = this.refreshList.bind(this);
 
@@ -31,7 +32,7 @@ export class ProductList extends Component {
             });
     }
 
-    deleteData(id) {
+    /*deleteData(id) {
         fetch('/product/delete/' + id)
             .then(function (response) {
                 return response.json();
@@ -44,7 +45,7 @@ export class ProductList extends Component {
 
                 //this.queryData("/product/query/")
             );
-    }
+    }*/
 
     refreshList() {
         //console.log('refresh start!');
@@ -77,7 +78,7 @@ export class ProductList extends Component {
                             <Table.Cell>{product.name}</Table.Cell>
                             <Table.Cell>{product.price}</Table.Cell>
                             <Table.Cell><UpdateProductModal productId={product.id} parents={this} /></Table.Cell>
-                            <Table.Cell><Button value={product.id} onClick={() => this.deleteData(product.id)}>Delete</Button></Table.Cell>
+                            <Table.Cell><DeleteButton DeleteUrl={'/product/delete/' + product.id} Callback={this.refreshList} /></Table.Cell>
                         </Table.Row>
                     )}
                 </Table.Body>

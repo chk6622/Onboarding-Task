@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
+import { Icon, Label, Menu, Table, Button, Confirm } from "semantic-ui-react";
 import AddStoreModal from './AddStoreModal';
 import UpdateStoreModal from './UpdateStoreModal';
+import DeleteButton from '../DeleteButton.js';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -15,7 +16,7 @@ export class StoreList extends Component {
       super(props);
       this.state = { stores: [], loading: true,refresh:true};
       this.queryData = this.queryData.bind(this);
-      this.deleteData = this.deleteData.bind(this);
+      //this.deleteData = this.deleteData.bind(this);
       this.renderStoresTable = this.renderStoresTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
 
@@ -31,7 +32,8 @@ export class StoreList extends Component {
             });
     }
 
-    deleteData(id) {
+    /*deleteData(id) {
+        this.setState({ confirmOpen: true});
         fetch('/store/delete/' + id)
             .then(function (response) {
                 return response.json();
@@ -41,16 +43,15 @@ export class StoreList extends Component {
             })
             .then(
                 setTimeout(this.refreshList(), 800)
-                
-        //this.queryData("/store/query/")
             );
-    }
+    }*/
 
     refreshList() {
         //console.log('refresh start!');
         this.queryData('/store/query/');
         //console.log('refresh stop!');
     }
+
 
     renderStoresTable() {
         
@@ -76,8 +77,8 @@ export class StoreList extends Component {
                     <Table.Row key={store.id}>
                         <Table.Cell>{store.name}</Table.Cell>
                         <Table.Cell>{store.address}</Table.Cell>
-                        <Table.Cell><UpdateStoreModal storeId={store.id} parents={this}/></Table.Cell>
-                        <Table.Cell><Button value={store.id} onClick={()=>this.deleteData(store.id)}>Delete</Button></Table.Cell>
+                        <Table.Cell><UpdateStoreModal storeId={store.id} parents={this} /></Table.Cell>
+                        <Table.Cell><DeleteButton DeleteUrl={'/store/delete/' + store.id} Callback={this.refreshList}/></Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>
