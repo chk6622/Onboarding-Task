@@ -8,5 +8,20 @@ namespace Onboarding_Task.ViewModels
 {
     public class ProductView:Product
     {
+        private string nameQry;
+        public string NameQry
+        {
+            set { this.nameQry = value; }
+
+            get { return this.nameQry == null ? "" : this.nameQry; }
+        }
+
+        private int priceQry;
+        public int PriceQry
+        {
+            set { this.priceQry = value; }
+
+            get { return this.priceQry; }
+        }
     }
 }

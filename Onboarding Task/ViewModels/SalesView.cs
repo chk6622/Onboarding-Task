@@ -8,6 +8,19 @@ namespace Onboarding_Task.ViewModels
 {
     public class SalesView:Sales
     {
+        private string dateSoldQry;
+        public string DateSoldQry
+        {
+            set
+            {
+                this.dateSoldQry = value;
+            }
+            get
+            {
+                return this.dateSoldQry == null ?"" : this.dateSoldQry;
+            }
+        }
+
         private int customerId;
         public int CustomerId 
         {

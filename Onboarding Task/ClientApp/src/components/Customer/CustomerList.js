@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
+import { Icon, Label, Menu, Table, Button,Input } from "semantic-ui-react";
 import AddCustomerModal from './AddCustomerModal';
 import UpdateCustomerModal from './UpdateCustomerModal';
 import DeleteButton from '../DeleteButton.js';
@@ -19,11 +19,30 @@ export class CustomerList extends Component {
       //this.deleteData = this.deleteData.bind(this);
       this.renderCustomersTable = this.renderCustomersTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
+      
+      this.myChangeHandler = this.myChangeHandler.bind(this);
 
       this.refreshList();
     }  
 
     queryData(queryUrl) {   
+        let nameQry = this.state['nameQry'];
+        let addressQry = this.state['addressQry'];
+        let hasParams = false;
+        if (nameQry != null && nameQry != '') {
+            queryUrl += '?nameQry=' + nameQry;
+            hasParams = true;
+        }
+        if (addressQry != null && addressQry != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'addressQry=' + addressQry;
+        }
+        //alert(queryUrl);
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
@@ -32,20 +51,6 @@ export class CustomerList extends Component {
             });
     }
 
-    /*deleteData(id) {
-        fetch('/customer/delete/' + id)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                setTimeout(alert(myJson), 800);
-            })
-            .then(
-                setTimeout(this.refreshList(), 800)
-                
-        //this.queryData("/customer/query/")
-            );
-    }*/
 
     refreshList() {
         //console.log('refresh start!');
@@ -53,10 +58,22 @@ export class CustomerList extends Component {
         //console.log('refresh stop!');
     }
 
+    myChangeHandler = (event) => {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({ [nam]: val });
+    }
+
     renderCustomersTable() {
         
         
-    return (
+        return (
+            <div>
+                <div>
+                    <Input type='text' name='nameQry' onChange={this.myChangeHandler} placeholder='Please input name.' />&nbsp;
+                    <Input type='text' name='addressQry' onChange={this.myChangeHandler} placeholder='Please input address.' />&nbsp;
+                    <Button as='a' onClick={()=>this.queryData('/customer/query')}>Query</Button>
+                </div>
         <Table celled>
             <Table.Header>
                 <Table.Row>
@@ -103,7 +120,8 @@ export class CustomerList extends Component {
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
-        </Table>
+                </Table>
+            </div>
     );
   }
 

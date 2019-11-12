@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Onboarding_Task.AppDbContext;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
@@ -53,9 +55,18 @@ namespace Onboarding_Task.Dao
             return store;
         }
 
-        public IEnumerable<Store> Query(string queryString)
+        public IEnumerable<Store> Query(StoreView queryObject)
         {
-            throw new NotImplementedException();
+            List<Store> results = null;
+            if (queryObject != null)
+            {
+                results = this._context.Stores.Where(s => s.Name.Contains(queryObject.NameQry) && s.Address.Contains(queryObject.AddressQry)).ToList();
+            }
+            else 
+            {
+                results = this._context.Stores.ToList();
+            }
+            return results;
         }
 
         public IEnumerable<Store> QueryAll()

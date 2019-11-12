@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
@@ -15,11 +16,11 @@ namespace Onboarding_Task.Dao
         IEnumerable<Customer> QueryAll();
 
         /// <summary>
-        /// Query data by query string
+        /// Query data by 'queryCustomer' object
         /// </summary>
-        /// <param name="queryString">query string</param>
+        /// <param name="queryCustomer">CustomerView object including query params</param>
         /// <returns>A collection of data getted from the database</returns>
-        IEnumerable<Customer> Query(string queryString);
+        IEnumerable<Customer> Query(CustomerView queryCustomer);
 
         /// <summary>
         /// Get a customer by id 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
+import { Icon, Label, Menu, Table, Button,Input } from "semantic-ui-react";
 import AddProductModal from './AddProductModal';
 import UpdateProductModal from './UpdateProductModal';
 import DeleteButton from '../DeleteButton.js';
@@ -19,11 +19,28 @@ export class ProductList extends Component {
         //this.deleteData = this.deleteData.bind(this);
         this.renderProductsTable = this.renderProductsTable.bind(this);
         this.refreshList = this.refreshList.bind(this);
+        this.myChangeHandler = this.myChangeHandler.bind(this);
 
         this.refreshList();
     }
 
     queryData(queryUrl) {
+        let nameQry = this.state['nameQry'];
+        let priceQry = this.state['priceQry'];
+        let hasParams = false;
+        if (nameQry != null && nameQry != '') {
+            queryUrl += '?nameQry=' + nameQry;
+            hasParams = true;
+        }
+        if (priceQry != null && priceQry != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'priceQry=' + priceQry;
+        }
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
@@ -32,31 +49,26 @@ export class ProductList extends Component {
             });
     }
 
-    /*deleteData(id) {
-        fetch('/product/delete/' + id)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                setTimeout(alert(myJson), 800);
-            })
-            .then(
-                setTimeout(this.refreshList(), 800)
-
-                //this.queryData("/product/query/")
-            );
-    }*/
-
     refreshList() {
         //console.log('refresh start!');
         this.queryData('/product/query/');
         //console.log('refresh stop!');
     }
 
+    myChangeHandler = (event) => {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({ [nam]: val });
+    }
+
     renderProductsTable() {
-
-
         return (
+            <div>
+                <div>
+                    <Input type='text' name='nameQry' onChange={this.myChangeHandler} placeholder='Please input name.' />&nbsp;
+                    <Input type='text' name='priceQry' onChange={this.myChangeHandler} placeholder='Please input price.' />&nbsp;
+                    <Button as='a' onClick={() => this.queryData('/product/query')}>Query</Button>
+                </div>
             <Table celled>
                 <Table.Header>
                     <Table.Row>
@@ -103,7 +115,8 @@ export class ProductList extends Component {
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>
-            </Table>
+                </Table>
+            </div>
         );
     }
 

@@ -18,9 +18,9 @@ namespace Onboarding_Task.Dao
         /// <summary>
         /// Query data by query string
         /// </summary>
-        /// <param name="queryString">query string</param>
+        /// <param name="queryObject">query object including query params</param>
         /// <returns>A collection of data getted from the database</returns>
-        IEnumerable<Sales> Query(string queryString);
+        IEnumerable<Sales> Query(SalesView queryObject);
 
         /// <summary>
         /// Get a sales by id 

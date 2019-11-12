@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
@@ -17,9 +18,9 @@ namespace Onboarding_Task.Dao
         /// <summary>
         /// Query data by query string
         /// </summary>
-        /// <param name="queryString">query string</param>
+        /// <param name="queryObject">query object including query params</param>
         /// <returns>A collection of data getted from the database</returns>
-        IEnumerable<Product> Query(string queryString);
+        IEnumerable<Product> Query(ProductView queryObject);
 
         /// <summary>
         /// Get a product by id 

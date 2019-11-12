@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Onboarding_Task.AppDbContext;
 using Onboarding_Task.Models;
+using Onboarding_Task.ViewModels;
 
 namespace Onboarding_Task.Dao
 {
@@ -53,9 +55,20 @@ namespace Onboarding_Task.Dao
             return product;
         }
 
-        public IEnumerable<Product> Query(string queryString)
+        public IEnumerable<Product> Query(ProductView queryObject)
         {
-            throw new NotImplementedException();
+            List<Product> queryResults=null;
+            if (queryObject != null)
+            {
+                queryResults=_context.Products.Where(p => p.Name.Contains(queryObject.NameQry)
+                && p.Price == (queryObject.PriceQry == 0 ? p.Price : queryObject.PriceQry)).ToList();
+                
+            }
+            else
+            {
+                queryResults = _context.Products.ToList();
+            }
+            return queryResults;
         }
 
         public IEnumerable<Product> QueryAll()
