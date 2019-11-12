@@ -80,6 +80,7 @@ class AddSalesForm extends React.Component {
                         optionTextPropsName='name'
                         optionValuePropsName='id'
                         returnPropsName='customerId'
+                        placeholder='Please select a customer.'
                     />
                 </Form.Field>
                 <Form.Field>
@@ -90,6 +91,7 @@ class AddSalesForm extends React.Component {
                         optionTextPropsName='name'
                         optionValuePropsName='id'
                         returnPropsName='productId'
+                        placeholder='Please select a product.'
                     />
                 </Form.Field>
                 <Form.Field>
@@ -100,6 +102,7 @@ class AddSalesForm extends React.Component {
                         optionTextPropsName='name'
                         optionValuePropsName='id'
                         returnPropsName='storeId'
+                        placeholder='Please select a store.'
                     />
                 </Form.Field>
                 

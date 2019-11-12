@@ -71,8 +71,8 @@ namespace Onboarding_Task.Dao
             {
                 results = this._context.Sales.Where(s => s.DateSold.Contains(queryObject.DateSoldQry) 
                                                 && s.Customer.Id==(queryObject.CustomerId==0?s.Customer.Id : queryObject.CustomerId)
-                                                &&s.Product.Id==(queryObject.ProductId==0?s.Product.Id:queryObject.CustomerId)
-                                                &&s.Store.Id==(queryObject.StoreId==0?s.Store.Id:queryObject.StoreId)).ToList();
+                                                && s.Product.Id==(queryObject.ProductId==0?s.Product.Id:queryObject.ProductId)
+                                                && s.Store.Id==(queryObject.StoreId==0?s.Store.Id:queryObject.StoreId)).Include(x => x.Customer).Include(x => x.Product).Include(x => x.Store).ToList();
             }
             else
             {

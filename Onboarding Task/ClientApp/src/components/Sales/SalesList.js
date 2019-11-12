@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table, Button } from "semantic-ui-react";
+import { Icon, Label, Menu, Table, Button,Input } from "semantic-ui-react";
 import AddSalesModal from './AddSalesModal';
 import UpdateSalesModal from './UpdateSalesModal';
 import DeleteButton from '../DeleteButton.js';
+import DropdownSearchQuery from '../DropdownSearchQuery';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -19,11 +20,48 @@ export class SalesList extends Component {
       //this.deleteData = this.deleteData.bind(this);
       this.renderSalesTable = this.renderSalesTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
+      this.myChangeHandler = this.myChangeHandler.bind(this);
 
       this.refreshList();
     }  
 
     queryData(queryUrl) {   
+        let dateSoldQry = this.state['dateSoldQry'];
+        let customerId = this.state['customerId'];
+        let productId = this.state['productId'];
+        let storeId = this.state['storeId'];
+        let hasParams = false;
+        if (dateSoldQry != null && dateSoldQry != '') {
+            queryUrl += '?dateSoldQry=' + dateSoldQry;
+            hasParams = true;
+        }
+        if (customerId != null && customerId != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'customerId=' + customerId;
+        }
+        if (productId != null && productId != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'productId=' + productId;
+        }
+        if (storeId != null && storeId != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'storeId=' + storeId;
+        }
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
@@ -32,31 +70,51 @@ export class SalesList extends Component {
             });
     }
 
-    /*deleteData(id) {
-        fetch('/sales/delete/' + id)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                setTimeout(alert(myJson), 800);
-            })
-            .then(
-                setTimeout(this.refreshList(), 800)
-                
-        //this.queryData("/sales/query/")
-            );
-    }*/
-
     refreshList() {
         //console.log('refresh start!');
         this.queryData('/sales/query/');
         //console.log('refresh stop!');
     }
 
+    myChangeHandler = (event) => {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({ [nam]: val });
+    }
+
     renderSalesTable() {
         
         
-    return (
+        return (
+            <div>
+                <div>
+                    <Input type='text' name='dateSoldQry' onChange={this.myChangeHandler} placeholder='Please input date sold.' />&nbsp;
+                    <DropdownSearchQuery
+                        parent={this}
+                        fetchDataUrl='/customer/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='customerId'
+                        placeholder='Please select a customer.'
+                    />&nbsp;
+                    <DropdownSearchQuery
+                        parent={this}
+                        fetchDataUrl='/product/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='productId'
+                        placeholder='Please select a product.'
+                    />&nbsp;
+                    <DropdownSearchQuery
+                        parent={this}
+                        fetchDataUrl='/store/query'
+                        optionTextPropsName='name'
+                        optionValuePropsName='id'
+                        returnPropsName='storeId'
+                        placeholder='Please select a store.'
+                    />&nbsp;
+                    <Button as='a' onClick={() => this.queryData('/sales/query')}>Query</Button>
+                </div>
         <Table celled>
             <Table.Header>
                 <Table.Row>
@@ -107,7 +165,8 @@ export class SalesList extends Component {
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
-        </Table>
+                </Table>
+            </div>
     );
   }
 

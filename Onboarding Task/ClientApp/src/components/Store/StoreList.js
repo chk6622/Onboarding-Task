@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Label, Menu, Table, Button, Confirm } from "semantic-ui-react";
+import { Icon, Label, Menu, Table, Button, Confirm,Input } from "semantic-ui-react";
 import AddStoreModal from './AddStoreModal';
 import UpdateStoreModal from './UpdateStoreModal';
 import DeleteButton from '../DeleteButton.js';
@@ -19,11 +19,28 @@ export class StoreList extends Component {
       //this.deleteData = this.deleteData.bind(this);
       this.renderStoresTable = this.renderStoresTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
+      this.myChangeHandler = this.myChangeHandler.bind(this);
 
       this.refreshList();
     }  
 
     queryData(queryUrl) {   
+        let nameQry = this.state['nameQry'];
+        let addressQry = this.state['addressQry'];
+        let hasParams = false;
+        if (nameQry != null && nameQry != '') {
+            queryUrl += '?nameQry=' + nameQry;
+            hasParams = true;
+        }
+        if (addressQry != null && addressQry != '') {
+            if (!hasParams) {
+                queryUrl += '?';
+            }
+            else {
+                queryUrl += '&';
+            }
+            queryUrl += 'addressQry=' + addressQry;
+        }
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
@@ -32,31 +49,28 @@ export class StoreList extends Component {
             });
     }
 
-    /*deleteData(id) {
-        this.setState({ confirmOpen: true});
-        fetch('/store/delete/' + id)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                setTimeout(alert(myJson), 800);
-            })
-            .then(
-                setTimeout(this.refreshList(), 800)
-            );
-    }*/
-
     refreshList() {
         //console.log('refresh start!');
         this.queryData('/store/query/');
         //console.log('refresh stop!');
     }
 
+    myChangeHandler = (event) => {
+        let nam = event.target.name;
+        let val = event.target.value;
+        this.setState({ [nam]: val });
+    }
 
     renderStoresTable() {
         
         
-    return (
+        return (
+            <div>
+                <div>
+                    <Input type='text' name='nameQry' onChange={this.myChangeHandler} placeholder='Please input name.' />&nbsp;
+                    <Input type='text' name='addressQry' onChange={this.myChangeHandler} placeholder='Please input address.' />&nbsp;
+                    <Button as='a' onClick={() => this.queryData('/store/query')}>Query</Button>
+                </div>
         <Table celled>
             <Table.Header>
                 <Table.Row>
@@ -103,7 +117,8 @@ export class StoreList extends Component {
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
-        </Table>
+                </Table>
+                </div>
     );
   }
 

@@ -57,12 +57,12 @@ export default class DropdownSearchQuery extends Component {
         
         return (
             <Dropdown
-                fluid
-
+                
+                clearable
                 onChange={this.handleChange}
                 onSearchChange={this.handleSearchChange}
                 options={this.state.options}
-                placeholder='Please select a customer.'
+                placeholder={this.props.placeholder}
                 search
                 searchQuery={this.state.searchQuery}
                 selection
