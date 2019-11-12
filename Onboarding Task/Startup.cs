@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Onboarding_Task.Dao;
 using Onboarding_Task.AppDbContext;
 using System.Linq;
+using Onboarding_Task.Validation;
 
 namespace Onboarding_Task
 {
@@ -24,9 +25,15 @@ namespace Onboarding_Task
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(
-            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore );
+            /*options =>
+            {
+                options.Filters.Add<ValidationFilter>();
+            }*/
+            services.AddMvc(
+                options =>options.Filters.Add<ValidationFilter>()
+                )
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore );
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -70,6 +77,7 @@ namespace Onboarding_Task
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+           
 
             app.UseSpa(spa =>
             {

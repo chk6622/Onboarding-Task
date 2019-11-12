@@ -13,8 +13,8 @@ namespace Onboarding_Task.Models
         public Customer Customer { set; get; }
         public Product Product { set; get; }
         public Store Store { set; get; }
-        [Required]
-        [StringLength(10)]
+        [Required(ErrorMessage ="{0} can't be NULL!")]
+        [StringLength(10,ErrorMessage ="{0} must be between {2} and {1}",MinimumLength =4)]
         public string DateSold { set; get; }
     }
 }

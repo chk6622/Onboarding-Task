@@ -51,6 +51,18 @@ class UpdateProductForm extends React.Component {
         let name = this.state.name;
         let price = this.state.price;
         let id = this.state.id;
+        fetch('/product/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "id": id, "name": name, "price": price })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                alert(myJson.message);
+            });
+        /*
         if (this.myValidate(name, price)) {
             fetch('/product/update', {
                 method: 'POST', 
@@ -63,7 +75,7 @@ class UpdateProductForm extends React.Component {
                 .then(function (myJson) {
                     alert(myJson);
                 });
-        }
+        }*/
     }
     myChangeHandler = (event) => {
         let nam = event.target.name;

@@ -29,6 +29,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191110100045_migrate-to-azure.cs" />
+    <Compile Remove="Migrations\20191110100045_migrate-to-azure.Designer.cs" />
+    <Compile Remove="Migrations\20191111100219_addDataValidition.cs" />
+    <Compile Remove="Migrations\20191111100219_addDataValidition.Designer.cs" />
+    <Compile Remove="Migrations\20191111211325_addDataValidation.cs" />
+    <Compile Remove="Migrations\20191111211325_addDataValidation.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Shared\Index_bak.cshtml" />
   </ItemGroup>
 

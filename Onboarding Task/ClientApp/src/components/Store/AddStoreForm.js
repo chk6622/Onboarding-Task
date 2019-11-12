@@ -31,11 +31,24 @@ class AddStoreForm extends React.Component {
         return isValid;
     }
     mySubmitHandler = (event) => {
-        debugger
+        //debugger
         event.preventDefault();
         let name = this.state.name;
         let address = this.state.address;
-        if (this.myValidate(name, address)) {
+
+        fetch('/store/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "name": name, "address": address })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                alert(myJson.message);
+            });
+    }
+        /*if (this.myValidate(name, address)) {
             fetch('/store/add', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
@@ -46,9 +59,9 @@ class AddStoreForm extends React.Component {
                 })
                 .then(function (myJson) {
                     alert(myJson);
-                });
-        }
-    }
+                });*/
+        
+ 
     myChangeHandler = (event) => {
         let nam = event.target.name;
         let val = event.target.value;

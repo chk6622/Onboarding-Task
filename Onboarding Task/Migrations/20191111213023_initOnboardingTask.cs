@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Onboarding_Task.Migrations
 {
-    public partial class migratetoazure : Migration
+    public partial class initOnboardingTask : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace Onboarding_Task.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Address = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +27,7 @@ namespace Onboarding_Task.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
@@ -41,8 +41,8 @@ namespace Onboarding_Task.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Address = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,7 @@ namespace Onboarding_Task.Migrations
                     CustomerId = table.Column<int>(nullable: true),
                     ProductId = table.Column<int>(nullable: true),
                     StoreId = table.Column<int>(nullable: true),
-                    DateSold = table.Column<string>(nullable: true)
+                    DateSold = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {

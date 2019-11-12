@@ -44,12 +44,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Update([FromBody] CustomerView customerView)
         {
             bool isSuccess = false;
-            string rMessage = "Update customer success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Update customer success!",
+                Result = true
+            };
             Customer customer = customerView;
             isSuccess = this._customerDao.Update(customer);
             if (!isSuccess)
             {
-                rMessage = "Update customer fail!";
+                rMessage.Message = "Update customer fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -58,12 +63,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Add([FromBody] CustomerView customerView)
         {
             bool isSuccess = false;
-            string rMessage = "Add customer success!";
+            ActionMessage rMessage = new ActionMessage() 
+            { 
+                Message = "Add customer success!", 
+                Result = true 
+            };
             Customer customer = customerView;
             isSuccess=this._customerDao.Add(customer);
             if (!isSuccess)
             {
-                rMessage = "Add customer fail!";
+                rMessage.Message= "Add customer fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -71,11 +81,16 @@ namespace Onboarding_Task.Controllers
         public JsonResult Delete(int id)
         {
             bool isSuccess = false;
-            string rMessage = "Delete customer success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Delete customer success!",
+                Result = true
+            };
             isSuccess = this._customerDao.Delete(id);
             if (!isSuccess)
             {
-                rMessage = "Delete customer fail!";
+                rMessage.Message = "Delete customer fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }

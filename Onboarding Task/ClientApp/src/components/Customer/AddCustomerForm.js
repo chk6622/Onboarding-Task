@@ -35,7 +35,18 @@ class AddCustomerForm extends React.Component {
         event.preventDefault();
         let name = this.state.name;
         let address = this.state.address;
-        if (this.myValidate(name, address)) {
+        fetch('/customer/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "name": name, "address": address})
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                alert(myJson.message);
+            });
+        /*if (this.myValidate(name, address)) {
             fetch('/customer/add', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
@@ -47,7 +58,7 @@ class AddCustomerForm extends React.Component {
                 .then(function (myJson) {
                     alert(myJson);
                 });
-        }
+        }*/
     }
     myChangeHandler = (event) => {
         let nam = event.target.name;

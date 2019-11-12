@@ -10,11 +10,11 @@ namespace Onboarding_Task.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { set; get; }
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage ="{0} can't be NULL!")]
+        [StringLength(50,ErrorMessage ="{0} length must be between {2} and {0}",MinimumLength =2)]
         public string Name { set; get; }
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "{0} can't be NULL!")]
+        [StringLength(100, ErrorMessage = "{0} length must be between {2} and {0}", MinimumLength = 2)]
         public string Address { set; get; }
 
         public List<Sales> ProductSold { set; get; }

@@ -23,7 +23,7 @@ class DeleteButton extends Component {
                 return response.json();
             })
             .then(function (myJson) {
-                setTimeout(alert(myJson), 800);
+                setTimeout(alert(myJson.message), 800);
             })
             .then(
                 setTimeout(this.props.Callback(), 800)

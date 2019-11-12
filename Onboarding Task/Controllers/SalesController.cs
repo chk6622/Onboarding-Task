@@ -53,7 +53,11 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Update([FromBody] SalesView salesView)
         {
             bool isSuccess = false;
-            string rMessage = "Update sales success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Update sales success!",
+                Result = true
+            };
             int customerId = salesView.CustomerId;
             if (customerId > 0)
             {
@@ -76,7 +80,8 @@ namespace Onboarding_Task.Controllers
             isSuccess = this._salesDao.Update(salesView);
             if (!isSuccess)
             {
-                rMessage = "Update sales fail!";
+                rMessage.Message = "Update sales fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -85,7 +90,11 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Add([FromBody] SalesView salesView)
         {
             bool isSuccess = false;
-            string rMessage = "Add sales success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Add sales success!",
+                Result = true
+            };
 
             int customerId = salesView.CustomerId;
             if(customerId>0)
@@ -110,7 +119,8 @@ namespace Onboarding_Task.Controllers
             isSuccess =this._salesDao.Add(salesView);
             if (!isSuccess)
             {
-                rMessage = "Add sales fail!";
+                rMessage.Message = "Add sales fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -118,11 +128,16 @@ namespace Onboarding_Task.Controllers
         public JsonResult Delete(int id)
         {
             bool isSuccess = false;
-            string rMessage = "Delete sales success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Delete sales success!",
+                Result = true
+            };
             isSuccess = this._salesDao.Delete(id);
             if (!isSuccess)
             {
-                rMessage = "Delete sales fail!";
+                rMessage.Message = "Delete sales fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }

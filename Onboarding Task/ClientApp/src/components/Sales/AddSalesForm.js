@@ -33,7 +33,19 @@ class AddSalesForm extends React.Component {
         let customerId = this.state.customerId;
         let productId = this.state.productId;
         let storeId = this.state.storeId;
-        
+
+        fetch('/sales/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "dateSold": dateSold, "customerId": customerId, "productId": productId, "storeId": storeId })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                alert(myJson.message);
+            });
+        /*
         if (this.myValidate(dateSold)) {
             fetch('/sales/add', {
                 method: 'POST', 
@@ -46,7 +58,7 @@ class AddSalesForm extends React.Component {
                 .then(function (myJson) {
                     alert(myJson);
                 });
-        }
+        }*/
     }
     myChangeHandler = (event) => {
         let nam = event.target.name;

@@ -50,7 +50,19 @@ class UpdateStoreForm extends React.Component {
         let name = this.state.name;
         let address = this.state.address;
         let id = this.state.id;
-        if (this.myValidate(name, address)) {
+
+        fetch('/store/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "id": id, "name": name, "address": address })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (myJson) {
+                alert(myJson.message);
+            });
+        /*if (this.myValidate(name, address)) {
             fetch('/store/update', {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
@@ -62,7 +74,7 @@ class UpdateStoreForm extends React.Component {
                 .then(function (myJson) {
                     alert(myJson);
                 });
-        }
+        }*/
     }
     myChangeHandler = (event) => {
         let nam = event.target.name;

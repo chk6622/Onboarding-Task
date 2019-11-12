@@ -44,12 +44,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Update([FromBody] ProductView productView)
         {
             bool isSuccess = false;
-            string rMessage = "Update product success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Update product success!",
+                Result = true
+            };
             Product product = productView;
             isSuccess = this._productDao.Update(product);
             if (!isSuccess)
             {
-                rMessage = "Update product fail!";
+                rMessage.Message = "Update product fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -58,12 +63,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Add([FromBody] ProductView productView)
         {
             bool isSuccess = false;
-            string rMessage = "Add product success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Add product success!",
+                Result = true
+            };
             Product product = productView;
             isSuccess = this._productDao.Add(product);
             if (!isSuccess)
             {
-                rMessage = "Add product fail!";
+                rMessage.Message = "Add product fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -71,11 +81,16 @@ namespace Onboarding_Task.Controllers
         public JsonResult Delete(int id)
         {
             bool isSuccess = false;
-            string rMessage = "Delete product success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Delete product success!",
+                Result = true
+            };
             isSuccess = this._productDao.Delete(id);
             if (!isSuccess)
             {
-                rMessage = "Delete product fail!";
+                rMessage.Message = "Delete product fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }

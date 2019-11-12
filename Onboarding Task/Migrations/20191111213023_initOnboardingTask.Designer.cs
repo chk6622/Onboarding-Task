@@ -10,8 +10,8 @@ using Onboarding_Task.AppDbContext;
 namespace Onboarding_Task.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20191111100219_addDataValidition")]
-    partial class addDataValidition
+    [Migration("20191111213023_initOnboardingTask")]
+    partial class initOnboardingTask
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

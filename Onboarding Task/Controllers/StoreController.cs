@@ -44,12 +44,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Update([FromBody] StoreView storeView)
         {
             bool isSuccess = false;
-            string rMessage = "Update store success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Update store success!",
+                Result = true
+            };
             Store store = storeView;
             isSuccess = this._storeDao.Update(store);
             if (!isSuccess)
             {
-                rMessage = "Update store fail!";
+                rMessage.Message = "Update store fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -58,12 +63,17 @@ namespace Onboarding_Task.Controllers
         public async Task<JsonResult> Add([FromBody] StoreView storeView)
         {
             bool isSuccess = false;
-            string rMessage = "Add store success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Add store success!",
+                Result = true
+            };
             Store store = storeView;
             isSuccess = this._storeDao.Add(store);
             if (!isSuccess)
             {
-                rMessage = "Add store fail!";
+                rMessage.Message = "Add store fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
@@ -71,11 +81,16 @@ namespace Onboarding_Task.Controllers
         public JsonResult Delete(int id)
         {
             bool isSuccess = false;
-            string rMessage = "Delete store success!";
+            ActionMessage rMessage = new ActionMessage()
+            {
+                Message = "Delete store success!",
+                Result = true
+            };
             isSuccess = this._storeDao.Delete(id);
             if (!isSuccess)
             {
-                rMessage = "Delete store fail!";
+                rMessage.Message = "Delete store fail!";
+                rMessage.Result = false;
             }
             return Json(rMessage);
         }
