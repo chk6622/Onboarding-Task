@@ -82,7 +82,7 @@ export class StoreList extends Component {
     refreshList(curPage) {
         //debugger
         if (curPage == null || curPage == undefined) {
-            curPage = 1;
+            curPage = (this.state['curPageIndex'] == null || this.state['curPageIndex'] == undefined) ? 1 : this.state['curPageIndex'];
         }
         let url = '/store/query/';
         let paginationParams = this.paginate(curPage);

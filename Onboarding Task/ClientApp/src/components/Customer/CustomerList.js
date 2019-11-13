@@ -39,7 +39,8 @@ export class CustomerList extends Component {
       this.refreshList();
     }  
 
-    queryData(queryUrl,curPage) {
+    queryData(queryUrl, curPage) {
+        //alert(queryUrl)
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
@@ -85,7 +86,7 @@ export class CustomerList extends Component {
         //debugger
         if (curPage == null || curPage == undefined)
         {
-            curPage = 1;
+            curPage = (this.state['curPageIndex'] == null || this.state['curPageIndex'] == undefined) ? 1 : this.state['curPageIndex'];
         }
         let url = '/customer/query/';
         let paginationParams = this.paginate(curPage);

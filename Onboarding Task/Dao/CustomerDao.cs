@@ -41,6 +41,7 @@ namespace Onboarding_Task.Dao
                 Customer customer=_context.Customers.Find(id);
                 _context.Remove<Customer>(customer);
                 _context.SaveChanges();
+                
                 bReturn = true;
             }
             catch (Exception e)
