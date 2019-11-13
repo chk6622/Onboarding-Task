@@ -55,17 +55,20 @@ namespace Onboarding_Task.Dao
             return store;
         }
 
-        public IEnumerable<Store> Query(StoreView queryObject)
+        public QueryResultView<Store> Query(StoreView queryObject)
         {
-            List<Store> results = null;
+            QueryResultView<Store> results = new QueryResultView<Store>();
+            IQueryable<Store> stores = null;
             if (queryObject != null)
             {
-                results = this._context.Stores.Where(s => s.Name.Contains(queryObject.NameQry) && s.Address.Contains(queryObject.AddressQry)).ToList();
+                stores = this._context.Stores.Where(s => s.Name.Contains(queryObject.NameQry) && s.Address.Contains(queryObject.AddressQry));
             }
             else 
             {
-                results = this._context.Stores.ToList();
+                stores = this._context.Stores;
             }
+            results.TotalData = stores.Count();
+            results.Results = stores.Skip(queryObject.SkipData).Take(queryObject.DataPerPage).ToList();
             return results;
         }
 

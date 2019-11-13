@@ -64,20 +64,23 @@ namespace Onboarding_Task.Dao
             return sales;
         }
 
-        public IEnumerable<Sales> Query(SalesView queryObject)
+        public QueryResultView<Sales> Query(SalesView queryObject)
         {
-            List<Sales> results = null;
+            QueryResultView<Sales> results = new QueryResultView<Sales>();
+            IQueryable<Sales> sales = null;
             if (queryObject != null)
             {
-                results = this._context.Sales.Where(s => s.DateSold.Contains(queryObject.DateSoldQry) 
+                sales = this._context.Sales.Where(s => s.DateSold.Contains(queryObject.DateSoldQry) 
                                                 && s.Customer.Id==(queryObject.CustomerId==0?s.Customer.Id : queryObject.CustomerId)
                                                 && s.Product.Id==(queryObject.ProductId==0?s.Product.Id:queryObject.ProductId)
-                                                && s.Store.Id==(queryObject.StoreId==0?s.Store.Id:queryObject.StoreId)).Include(x => x.Customer).Include(x => x.Product).Include(x => x.Store).ToList();
+                                                && s.Store.Id==(queryObject.StoreId==0?s.Store.Id:queryObject.StoreId)).Include(x => x.Customer).Include(x => x.Product).Include(x => x.Store);
             }
             else
             {
-                results = this._context.Sales.ToList();
+                sales = this._context.Sales;
             }
+            results.TotalData = sales.Count();
+            results.Results = sales.Skip(queryObject.SkipData).Take(queryObject.DataPerPage).ToList();
             return results;
         }
 

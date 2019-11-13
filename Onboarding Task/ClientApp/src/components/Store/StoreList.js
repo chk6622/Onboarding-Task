@@ -14,45 +14,82 @@ export class StoreList extends Component {
 
   constructor (props) {
       super(props);
-      this.state = { stores: [], loading: true,refresh:true};
+      this.state = {
+          stores: [],
+          loading: true,
+          refresh: true,
+          totalData: 0,
+          dataPerPage: 5,
+          curPageIndex: 1,
+          skipData: 0,
+          maxPageNumber: 1,
+          beginPage: 1,
+          endPage: 1,
+      };
       this.queryData = this.queryData.bind(this);
       //this.deleteData = this.deleteData.bind(this);
       this.renderStoresTable = this.renderStoresTable.bind(this);
       this.refreshList = this.refreshList.bind(this);
       this.myChangeHandler = this.myChangeHandler.bind(this);
+      this.skipPage = this.skipPage.bind(this);
+      this.skipPage = this.skipPage.bind(this);
+      this.getQueryParamsUrl = this.getQueryParamsUrl.bind(this);
+      this.paginate = this.paginate.bind(this);
 
       this.refreshList();
     }  
 
-    queryData(queryUrl) {   
-        let nameQry = this.state['nameQry'];
-        let addressQry = this.state['addressQry'];
-        let hasParams = false;
-        if (nameQry != null && nameQry != '') {
-            queryUrl += '?nameQry=' + nameQry;
-            hasParams = true;
-        }
-        if (addressQry != null && addressQry != '') {
-            if (!hasParams) {
-                queryUrl += '?';
-            }
-            else {
-                queryUrl += '&';
-            }
-            queryUrl += 'addressQry=' + addressQry;
-        }
+    queryData(queryUrl, curPage) {   
+        
         fetch(queryUrl)
             .then(response => response.json())
             .then(data => {
                 //console.log('There are '+data.length+' stores.');
-                this.setState({ stores: data, loading: false, refresh: !this.state.refresh});
+                this.setState({ curPageIndex: curPage, totalData: data.totalData,stores: data.results, loading: false, refresh: !this.state.refresh});
             });
     }
 
-    refreshList() {
-        //console.log('refresh start!');
-        this.queryData('/store/query/');
-        //console.log('refresh stop!');
+    getQueryParamsUrl(queryUrl) {
+        let nameQry = this.state['nameQry'];
+        let addressQry = this.state['addressQry'];
+        if (nameQry != null && nameQry != '') {
+            queryUrl += '&nameQry=' + nameQry;
+        }
+        if (addressQry != null && addressQry != '') {
+            queryUrl += '&addressQry=' + addressQry;
+        }
+        return queryUrl;
+    }
+
+    getPaginatedUrl(url, paginationParams) {
+        url += '?skipData=' + paginationParams.skipData + '&dataPerPage=' + paginationParams.dataPerPage;
+        return url;
+    }
+
+    paginate(curPage) {
+        //debugger
+        let totalData = (this.state['totalData'] == null || this.state['totalData'] == undefined) ? 0 : this.state['totalData'];
+        let dataPerPage = (this.state['dataPerPage'] == null || this.state['dataPerPage'] == undefined) ? 10 : this.state['dataPerPage'];
+        let curPageIndex = (curPage == null || curPage == undefined) ? 1 : curPage;
+        let skipData = (curPageIndex - 1) * dataPerPage;
+        //let maxPageNumber = totalData % dataPerPage > 0 ? integer(totalData / dataPerPage) + 1 : int(totalData / dataPerPage);
+        let maxPageNumber = Math.ceil(totalData / dataPerPage) <= 0 ? 1 : Math.ceil(totalData / dataPerPage);
+        let beginPage = curPageIndex - 2 <= 0 ? 1 : curPageIndex - 2;
+        let endPage = curPageIndex + 2 > maxPageNumber ? maxPageNumber : curPageIndex + 2;
+        return { totalData: totalData, dataPerPage: dataPerPage, curPageIndex: curPageIndex, skipData: skipData, maxPageNumber: maxPageNumber, beginPage: beginPage, endPage: endPage };
+    }
+
+    refreshList(curPage) {
+        //debugger
+        if (curPage == null || curPage == undefined) {
+            curPage = 1;
+        }
+        let url = '/store/query/';
+        let paginationParams = this.paginate(curPage);
+        url = this.getPaginatedUrl(url, paginationParams);
+        url = this.getQueryParamsUrl(url);
+        this.queryData(url, curPage);
+
     }
 
     myChangeHandler = (event) => {
@@ -61,8 +98,21 @@ export class StoreList extends Component {
         this.setState({ [nam]: val });
     }
 
+    skipPage = (event, { name }) => {
+        //debugger
+        this.refreshList(name);
+    }
+
     renderStoresTable() {
-        
+        let paginationParams = this.paginate(this.state.curPageIndex);
+        let beginPage = paginationParams.beginPage;
+        let endPage = paginationParams.endPage;
+        let curPage = paginationParams.curPageIndex;
+        let pages = new Array();
+        //debugger
+        for (let ind = beginPage; ind <= endPage; ind++) {
+            pages.push(ind);
+        }
         
         return (
             <div>
@@ -97,26 +147,19 @@ export class StoreList extends Component {
                 )}
             </Table.Body>
 
-            <Table.Footer>
-                <Table.Row>
-                    <Table.HeaderCell colSpan='4'>
-                        
-                            <Menu floated='right' pagination>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron left' />
-                                </Menu.Item>
-                                <Menu.Item as='a'>1</Menu.Item>
-                                <Menu.Item as='a'>2</Menu.Item>
-                                <Menu.Item as='a'>3</Menu.Item>
-                                <Menu.Item as='a'>4</Menu.Item>
-                                <Menu.Item as='a' icon>
-                                    <Icon name='chevron right' />
-                                </Menu.Item>
-                            </Menu>
-
-                    </Table.HeaderCell>
-                </Table.Row>
-            </Table.Footer>
+                    <Table.Footer>
+                        <Table.Row>
+                            <Table.HeaderCell colSpan='4'>
+                                <Menu floated='right' pagination>
+                                    {pages.map(pageIndex =>
+                                        <Menu.Item as='a' className={pageIndex == curPage ? 'big' : 'normal'} name={pageIndex} onClick={this.skipPage}>
+                                            {pageIndex}
+                                        </Menu.Item>
+                                    )}
+                                </Menu>
+                            </Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Footer>
                 </Table>
                 </div>
     );

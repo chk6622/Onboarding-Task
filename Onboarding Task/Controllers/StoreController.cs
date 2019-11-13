@@ -24,13 +24,8 @@ namespace Onboarding_Task.Controllers
 
         public JsonResult Query(StoreView storeView) 
         {
-            IEnumerable stores = this._storeDao.Query(storeView);
-            //var store = null;
-            //object model=null;
-            //foreach (var store in stores)
-            //{
-            //    model = store;
-            //}
+            QueryResultView<Store> stores = this._storeDao.Query(storeView);
+            
             return Json(stores);
         }
 

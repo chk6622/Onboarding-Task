@@ -31,13 +31,8 @@ namespace Onboarding_Task.Controllers
 
         public JsonResult Query(SalesView salesView) 
         {
-            IEnumerable saless = this._salesDao.Query(salesView);
-            //var sales = null;
-            //object model=null;
-            //foreach (var sales in saless)
-            //{
-            //    model = sales;
-            //}
+            QueryResultView<Sales> saless = this._salesDao.Query(salesView);
+            
             return Json(saless);
         }
 

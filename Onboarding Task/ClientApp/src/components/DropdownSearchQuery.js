@@ -25,7 +25,7 @@ export default class DropdownSearchQuery extends Component {
                 .then(response => response.json())
                 .then(data => {
                     if (data != null) {
-                        let options = data.map(item => {
+                        let options = data.results.map(item => {
                             if (item.id == this.props.initValue) {  //init searchQuery
                                 this.setState({ 'searchQuery': item.name });
                             }

@@ -19,7 +19,7 @@ export class ProductList extends Component {
             loading: true,
             refresh: true,
             totalData: 0,
-            dataPerPage: 2,
+            dataPerPage: 5,
             curPageIndex: 1,
             skipData: 0,
             maxPageNumber: 1,

@@ -80,5 +80,10 @@ namespace Onboarding_Task.ViewModels
             }
         }
 
+        private int dataPerPage;
+        public int DataPerPage { set { this.dataPerPage = value; } get { return this.dataPerPage == 0 ? 10 : this.dataPerPage; } }
+
+        public int SkipData { set; get; }
+
     }
 }
