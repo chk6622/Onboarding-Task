@@ -84,3 +84,9 @@ th {
     text-transform: uppercase;
     font-weight:bold;
 }
+
+.big {
+    font-weight:bold !important;
+    font-size:15px !important;
+    color:red !important;
+}

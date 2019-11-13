@@ -24,7 +24,7 @@ namespace Onboarding_Task.Controllers
 
         public JsonResult Query(CustomerView customerView) 
         {
-            IEnumerable customers = this._customerDao.Query(customerView);
+            QueryResultView<Customer> customers = this._customerDao.Query(customerView);
             //var customer = null;
             //object model=null;
             //foreach (var customer in customers)

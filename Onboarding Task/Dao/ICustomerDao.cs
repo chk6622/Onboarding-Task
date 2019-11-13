@@ -20,7 +20,7 @@ namespace Onboarding_Task.Dao
         /// </summary>
         /// <param name="queryCustomer">CustomerView object including query params</param>
         /// <returns>A collection of data getted from the database</returns>
-        IEnumerable<Customer> Query(CustomerView queryCustomer);
+        QueryResultView<Customer> Query(CustomerView queryCustomer);
 
         /// <summary>
         /// Get a customer by id 

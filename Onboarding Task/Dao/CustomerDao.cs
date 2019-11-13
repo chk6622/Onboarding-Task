@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Onboarding_Task.AppDbContext;
 using Onboarding_Task.Models;
 using Onboarding_Task.ViewModels;
@@ -55,18 +57,23 @@ namespace Onboarding_Task.Dao
             return customer;
         }
 
-        public IEnumerable<Customer> Query(CustomerView queryCustomer)
+        public QueryResultView<Customer> Query(CustomerView queryCustomer)
         {
-            List<Customer> queryResults = null;
+            QueryResultView<Customer> queryResult = new QueryResultView<Customer>();
+            IQueryable<Customer> customers = null;
             if (queryCustomer != null)
             {
-                queryResults = _context.Customers.Where(c => c.Name.Contains(queryCustomer.NameQry) && c.Address.Contains(queryCustomer.AddressQry)).ToList();
+                customers = _context.Customers
+                    .Where(c => c.Name.Contains(queryCustomer.NameQry) && c.Address.Contains(queryCustomer.AddressQry));
+                
             }
             else
             {
-                queryResults = _context.Customers.ToList();
+                customers=_context.Customers;
             }
-            return queryResults;
+            queryResult.TotalData = customers.Count();
+            queryResult.Results = customers.Skip(queryCustomer.SkipData).Take(queryCustomer.DataPerPage).ToList();
+            return queryResult;
         }
 
         public IEnumerable<Customer> QueryAll()
