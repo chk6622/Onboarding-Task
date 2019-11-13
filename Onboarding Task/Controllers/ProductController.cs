@@ -24,7 +24,7 @@ namespace Onboarding_Task.Controllers
 
         public JsonResult Query(ProductView productView) 
         {
-            IEnumerable products = this._productDao.Query(productView);
+            QueryResultView<Product> products = this._productDao.Query(productView);
             //var product = null;
             //object model=null;
             //foreach (var product in products)

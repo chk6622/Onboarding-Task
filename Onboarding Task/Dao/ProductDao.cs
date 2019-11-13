@@ -55,19 +55,23 @@ namespace Onboarding_Task.Dao
             return product;
         }
 
-        public IEnumerable<Product> Query(ProductView queryObject)
+        public QueryResultView<Product> Query(ProductView queryObject)
         {
-            List<Product> queryResults=null;
+            QueryResultView<Product> queryResults=new QueryResultView<Product>();
+            IQueryable<Product> products = null;
             if (queryObject != null)
             {
-                queryResults=_context.Products.Where(p => p.Name.Contains(queryObject.NameQry)
-                && p.Price == (queryObject.PriceQry == 0 ? p.Price : queryObject.PriceQry)).ToList();
+                products=_context.Products.Where(p => p.Name.Contains(queryObject.NameQry)
+                && p.Price == (queryObject.PriceQry == 0 ? p.Price : queryObject.PriceQry));
+                
                 
             }
             else
             {
-                queryResults = _context.Products.ToList();
+                products = _context.Products;
             }
+            queryResults.TotalData = products.Count();
+            queryResults.Results = products.Skip(queryObject.SkipData).Take(queryObject.DataPerPage).ToList();
             return queryResults;
         }
 

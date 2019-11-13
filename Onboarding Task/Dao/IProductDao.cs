@@ -20,7 +20,7 @@ namespace Onboarding_Task.Dao
         /// </summary>
         /// <param name="queryObject">query object including query params</param>
         /// <returns>A collection of data getted from the database</returns>
-        IEnumerable<Product> Query(ProductView queryObject);
+        QueryResultView<Product> Query(ProductView queryObject);
 
         /// <summary>
         /// Get a product by id 
