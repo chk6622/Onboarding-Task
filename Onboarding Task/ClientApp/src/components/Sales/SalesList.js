@@ -11,7 +11,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 export class SalesList extends Component {
     static displayName = SalesList.name;
-    
+
 
   constructor (props) {
       super(props);
@@ -49,7 +49,7 @@ export class SalesList extends Component {
                 this.setState({ curPageIndex: curPage, totalData: data.totalData,saless: data.results, loading: false, refresh: !this.state.refresh});
             });
     }
-
+    
     getQueryParamsUrl(queryUrl) {
         let dateSoldQry = this.state['dateSoldQry'];
         let customerId = this.state['customerId'];

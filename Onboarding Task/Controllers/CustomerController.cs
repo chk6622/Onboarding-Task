@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Onboarding_Task.Dao;
 using Onboarding_Task.Models;
 using Onboarding_Task.ViewModels;
@@ -13,31 +14,29 @@ namespace Onboarding_Task.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerDao _customerDao = null;
-        public CustomerController(ICustomerDao customerDao)
+        private readonly ILogger _logger = null;
+        public CustomerController(ICustomerDao customerDao,ILogger<CustomerController> logger)
         {
+            this._logger = logger;
             this._customerDao = customerDao;
         }
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/");
         }
 
         public JsonResult Query(CustomerView customerView) 
         {
+            this._logger.LogInformation("enter 'Query' method.");
             QueryResultView<Customer> customers = this._customerDao.Query(customerView);
-            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            Console.WriteLine("Get {0} data.", customers.TotalData);
+            this._logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            this._logger.LogInformation($"Get {customers.TotalData} data.");
             foreach(Customer customer in customers.Results)
             {
-                Console.WriteLine(customer.ToString());
+                this._logger.LogInformation(customer.ToString());
             }
-            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            //var customer = null;
-            //object model=null;
-            //foreach (var customer in customers)
-            //{
-            //    model = customer;
-            //}
+            this._logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
             return Json(customers);
         }
 
